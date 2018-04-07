@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+	<div class="form-group">
+	  <input type="text" class="form-control" id="input-post">
+	</div>
+	<div class="text-right">
+		<button type="button" class="btn btn-success" id="btn-post">Post</button>
+	</div>
+
+	<div id="posts_div">
+		
+	</div>
+</div>
+
+<script>
+var current_no = 1;
+$("#btn-post").click(function(){
+	var post_value = $("#input-post").val();
+	if(post_value == "") {
+		alert("Please input post value");
+		return;
+	}
+
+	$("#posts_div").append(`
+		<p> `+
+		current_no + `) ` +
+		post_value +
+		`</p>
+	`);
+
+	current_no++;
+	$("#input-post").val("");
+});
+</script>
