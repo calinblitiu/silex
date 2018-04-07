@@ -20,35 +20,55 @@
 </nav>
 
 <div class="container">
-	<div class="form-group">
-	  <input type="text" class="form-control" id="input-post">
-	</div>
-	<div class="text-right">
-		<button type="button" class="btn btn-success" id="btn-post">Post</button>
-	</div>
+	<form method="post" action="/post">
+		<div class="form-group">
+		  <input type="text" class="form-control" id="input-post" name="post_data" required>
+		  <label class="text-danger" style="display: none;" id="error_msg">Error post length must less 140.</label>
+		</div>
+		<div class="text-right">
+			<button type="submit" class="btn btn-success" id="btn-post">Post</button>
+		</div>
+	</form>
 
 	<div id="posts_div">
-		
+		{% for post in posts %}
+			<div class="well">
+				{{post.post_data}}
+				<p class="text-right">{{post.post_updated}}</p>
+			</div>
+		{% endfor %}
 	</div>
 </div>
 
+
 <script>
-var current_no = 1;
-$("#btn-post").click(function(){
-	var post_value = $("#input-post").val();
-	if(post_value == "") {
-		alert("Please input post value");
-		return;
-	}
 
-	$("#posts_div").append(`
-		<p> `+
-		current_no + `) ` +
-		post_value +
-		`</p>
-	`);
-
-	current_no++;
-	$("#input-post").val("");
+$( "#input-post" ).keypress(function() {
+  var post_data = $(this).val();
+  if(post_data.length >= 140) {
+  	$("#error_msg").show();
+  	 $("#btn-post").prop("disabled",true);
+  } else {
+  	$("#error_msg").hide();
+  	 $("#btn-post").prop("disabled",false);
+  }
 });
+
+
+ $( "#input-post" ).on('keydown', function() {
+    var key = event.keyCode || event.charCode;
+    var post_data = $(this).val();
+    if( key == 8 || key == 46 )
+    {
+    	if(post_data.length >= 140) {
+		  	$("#error_msg").show();
+		  	 $("#btn-post").prop("disabled",true);
+		  } else {
+		  	$("#error_msg").hide();
+		  	 $("#btn-post").prop("disabled",false);
+		  }
+
+    }
+  });
+
 </script>
